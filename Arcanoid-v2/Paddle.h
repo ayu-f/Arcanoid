@@ -6,7 +6,7 @@ using namespace sf;
 class Paddle : public GameObject, public sf::Drawable {
 private:
 	RectangleShape shape;
-	float width = 150.f;
+	float width = 180.f;
 	const float height = 16.f;
 	const float paddleVelocity = 13.f;
 	Vector2f velocity{ paddleVelocity, 0.f };

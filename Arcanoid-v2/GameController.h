@@ -32,6 +32,7 @@ private:
 	bool IsCollisionPaddle(GameObject& paddle, Ball& ball);
 	bool IsIntersecting(GameObject& obj1, GameObject& obj2);
 	void HandleCollisionBlock(Block& block, Ball& ball);
+	int health = 0;
 public:
 	int score = 0;
 	int GAMESTATE = STATES::GAMEPLAY;

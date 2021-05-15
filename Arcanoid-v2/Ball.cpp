@@ -4,9 +4,8 @@ Ball::Ball(int x, int y) : Circle(x, y){
 }
 
 void Ball::SetSpeedDefualt() {
-    ballVelocity = 6.f;
+    ballVelocity = 5.f;
 }
-
 
 void Ball::SpeedUp() {
     ballVelocity += 1.f;

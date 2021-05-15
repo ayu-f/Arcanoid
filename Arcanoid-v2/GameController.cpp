@@ -75,11 +75,28 @@ bool GameController::IsCollisionPaddle(GameObject& paddle, Ball& ball) {
 	if (!IsIntersecting(ball, paddle))
 		return false;
 	ball.moveUp();
+	if (bonus.floor.active) {
+		return true;
+	}
+	float coef = 0.025f;
 	if (ball.getPosition().x < paddle.getPosition().x) {
-		ball.moveLeft();
+		if (ball.velocity.x > 0) {
+			ball.velocity.x = ball.ballVelocity + coef * fabs(paddle.getPosition().x - ball.getPosition().x);
+		}
+		else {
+			ball.velocity.x = -ball.ballVelocity + coef * fabs(ball.getPosition().x - paddle.getPosition().x);
+		}
+		//ball.moveLeft();
 	}
 	else if (ball.getPosition().x > paddle.getPosition().x) {
-		ball.moveRight();
+		if (ball.velocity.x > 0) {
+			ball.velocity.x = ball.ballVelocity + coef * fabs(ball.getPosition().x - paddle.getPosition().x);
+		}
+		else {
+			ball.velocity.x = -ball.ballVelocity + coef * fabs(paddle.getPosition().x - ball.getPosition().x);
+		}
+		//ball.velocity.x += coef * (ball.getPosition().x - paddle.getPosition().x);
+		//ball.moveRight();
 	}
 	return true;
 }
@@ -206,7 +223,6 @@ void GameController::RunGame() {
 		return;
 	}
 
-
 	auto itBall = balls.begin();
 	vector<Ball> ::iterator itBallToDelete;
 	int i = 0;
@@ -226,7 +242,18 @@ void GameController::RunGame() {
 		}
 		if (!ball.update(windowWidth, windowHeight)) {
 			if (balls.size() == 1) {
-				GAMESTATE = STATES::GAME_OVER;
+				if (health >= 3) {
+					GAMESTATE = STATES::GAME_OVER;
+					health = 0;
+				}
+				else {
+					//SetBlocksToDefualt();
+					balls.emplace_back(300, 300);
+					sleep(seconds(0.5f));
+					health++;
+					return;
+				}
+				health++;
 			}
 			else {
 				thereAreBallToDelete = true;

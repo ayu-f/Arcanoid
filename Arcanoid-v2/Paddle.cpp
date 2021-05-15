@@ -52,7 +52,7 @@ float Paddle::bottom() {
 }
 
 void Paddle::IncraseWidth() {
-    this->width += 80.f;
+    this->width += 40.f;
     shape.setSize({ this->width, this->height });
     shape.setOrigin(width / 2.f, height / 2.f);
 }
